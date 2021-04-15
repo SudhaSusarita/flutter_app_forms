@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
+
 class Expansiontile extends StatefulWidget {
 
 
@@ -13,6 +15,35 @@ class _ExapansionTileState extends State<Expansiontile> {
 
   String _chosenValue;
 
+  List _myActivities;
+
+  List _interests = [
+    {
+      "display": "Sports",
+      "value": "Sports",
+    }, {
+      "display": "Tech",
+      "value": "Tech",
+    }, {
+      "display": "Games",
+      "value": "Games",
+    }, {
+      "display": "Art",
+      "value": "Art",
+    }, {
+      "display": "Travel",
+      "value": "Travel",
+    }, {
+      "display": "Music",
+      "value": "Music",
+    },{
+      "display": "Books",
+      "value": "Books",
+    },{
+      "display": "Cooking",
+      "value": "Cooking",
+    },
+  ];
 
 
   _selectDate(BuildContext context) async {
@@ -27,6 +58,7 @@ class _ExapansionTileState extends State<Expansiontile> {
         selectedDate = picked;
       });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -215,13 +247,32 @@ class _ExapansionTileState extends State<Expansiontile> {
                         },
                       ),
                     ),
-                    new ListTile(
-                      leading: const Icon(Icons.email),
-                      title: new TextField(
-                        decoration: new InputDecoration(
-                          hintText: "Secondary Email",
-                        ),
+                     MultiSelectFormField(
+                      autovalidate: false,
+                      chipBackGroundColor: Colors.red,
+                      chipLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+                      dialogTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                      checkBoxActiveColor: Colors.red,
+                      checkBoxCheckColor: Colors.green,
+                      dialogShapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                      title: Text(
+                        "Interests",
+                        style: TextStyle(fontSize: 16),
                       ),
+                      dataSource: _interests,
+                      textField: 'display',
+                      valueField: 'value',
+                      okButtonLabel: 'OK',
+                      cancelButtonLabel: 'CANCEL',
+                      hintWidget: Text('Please choose one or more'),
+                      initialValue: _myActivities,
+                      onSaved: (value) {
+                        if (value == null) return;
+                        setState(() {
+                          _myActivities = value;
+                        });
+                      },
                     ),
 
                   ],
